@@ -21,7 +21,7 @@ namespace CognizantDataverse
             var dataverseConnection = DataverseServiceClientConnection.Connect(configuration);
             
             // Create a new instance of CustomerServiceHubAPI
-            var app = new CustomerServiceHubAPI(dataverseConnection);
+            var app = new CustomerServiceHubApi(dataverseConnection);
             
             // Run the app
             app.Demo();

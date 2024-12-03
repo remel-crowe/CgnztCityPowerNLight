@@ -61,6 +61,62 @@ namespace CognizantDataverse.Services
             }
          
         }
+        
+        public void UpdateCase(Incident @case)
+        {
+            try
+            {
+                _dataverseConnection.Update(@case);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating case: {ex.Message}");
+                throw;
+            }
+        }
+        
+        public void DeleteCase(Guid caseId)
+        {
+            try
+            {
+                _dataverseConnection.Delete(Incident.EntityLogicalName, caseId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting case: {ex.Message}");
+                throw;
+            }
+        }
+
+        
+        // public List<Incident> GetCasesBySearchTerm(string searchTerm)
+        // {
+        //     try
+        //     {
+        //         var query = new QueryExpression(Incident.EntityLogicalName)
+        //         {
+        //             ColumnSet = new ColumnSet(true),
+        //             Criteria = new FilterExpression
+        //             {
+        //                 FilterOperator = LogicalOperator.Or,
+        //                 Conditions =
+        //                 {
+        //                     new ConditionExpression("incidentid", ConditionOperator.Equal, searchTerm),
+        //                     new ConditionExpression("title", ConditionOperator.Like, $"%{searchTerm}%"),
+        //                     new ConditionExpression("description", ConditionOperator.Like, $"%{searchTerm}%")
+        //                 }
+        //             }
+        //         };
+        //
+        //         return _dataverseConnection.RetrieveMultiple(query).Entities
+        //             .Select(entity => (Incident)entity).ToList();
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         Console.WriteLine($"Error retrieving case: {ex.Message}");
+        //         throw;
+        //     }
+        // }
     }
 
 }

@@ -1,16 +1,15 @@
 using CognizantDataverse.Model;
 using Microsoft.Xrm.Sdk;
 using CognizantDataverse.Services;
-using Microsoft.Extensions.Configuration;
 
 
 namespace CognizantDataverse.App;
 
-public class CustomerServiceHubAPI(IOrganizationService configuration)
+public class CustomerServiceHubApi(IOrganizationService dataverseConnection)
 {
-    private readonly AccountService _accountService = new AccountService(configuration);
-    private readonly ContactService _contactService = new ContactService(configuration);
-    private readonly CaseService _caseService = new CaseService(configuration);
+    private readonly AccountService _accountService = new AccountService(dataverseConnection);
+    private readonly ContactService _contactService = new ContactService(dataverseConnection);
+    private readonly CaseService _caseService = new CaseService(dataverseConnection);
 
     public void Demo()
     {
@@ -35,15 +34,15 @@ public class CustomerServiceHubAPI(IOrganizationService configuration)
         {
             Title = "Demo Incident",
             Description = "This is a demo incident",
-            CustomerId = new EntityReference(Account.EntityLogicalName, Guid.NewGuid()),
-            ContactId = {}
+            CustomerId = new EntityReference(Account.EntityLogicalName, Guid.NewGuid())
         };
         
-        GetAndPrintAccounts();
-        CreateAccount(demoAccount);
-        GetAndPrintAccounts();
-        // DeleteAccount();
-        GetAndPrintAccounts();
+        // GetAndPrintAccounts();
+        // CreateAccount(demoAccount);
+        // GetAndPrintAccounts();
+        // // DeleteAccount();
+        // GetAndPrintAccounts();
+        GetandPrintCases();
         
         
         
@@ -51,7 +50,7 @@ public class CustomerServiceHubAPI(IOrganizationService configuration)
     
     
     
-    public void CreateAccount(Account account)
+    private void CreateAccount(Account account)
     {
         try
         { 
@@ -64,12 +63,12 @@ public class CustomerServiceHubAPI(IOrganizationService configuration)
         
     }
     
-    public void UpdateAccount(Account account)
+    private void UpdateAccount(Account account)
     {
         _accountService.UpdateAccount(account);
     }
     
-    public void DeleteAccount(Guid accountId)
+    private void DeleteAccount(Guid accountId)
     {
         try
         {
@@ -82,7 +81,7 @@ public class CustomerServiceHubAPI(IOrganizationService configuration)
         
     }
     
-    public Account GetAccountById(Guid accountId)
+    private Account GetAccountById(Guid accountId)
     {
         return _accountService.GetAccountById(accountId);
     }
@@ -96,4 +95,30 @@ public class CustomerServiceHubAPI(IOrganizationService configuration)
         }
     }
     
+    
+    private void GetandPrintCases()
+    {
+        var cases = _caseService.GetCases();
+        foreach (var @case in cases)
+        {
+            Console.WriteLine($"Case Title: {@case.Title} | Case ID: {@case.Id} | Case Customer: {@case.CustomerId.Name}"); ;
+        }
+    }
+    
+    
+    // Search for cases by a search term - maybe not needed in the final version. ALSO BROKEN
+    // private void GetCasesBySearchTerm(string searchTerm)
+    // {
+    //     var cases = _caseService.GetCasesBySearchTerm(searchTerm);
+    //     foreach (var @case in cases)
+    //     {
+    //         Console.WriteLine($"Case Title: {@case.Title} | Case ID: {@case.Id} | Case Customer: {@case.CustomerId.Name}"); ;
+    //     }
+    // }
+    
+    
+    
+    
+    
+   
 }

@@ -19,7 +19,7 @@ class Program
         
         // Initialise DataverseServiceClientConnection with the configuration
         var dataverseConnection = new DataverseServiceClientConnection(configuration);
-        dataverseConnection.ConnectAndGetUserId();
+        dataverseConnection.Connect();
         
         var accountController = new AccountController(configuration);
         
@@ -32,8 +32,8 @@ class Program
         accounts.ForEach(account => account.Print());
         
         // Delete account and print the result message
-        var deleteMessage = await accountController.DeleteAccountById("ad82a4f2-b7b0-ef11-b8e8-6045bdcf868c");
-        Console.WriteLine(deleteMessage);
+        // var deleteMessage = await accountController.DeleteAccountById("ad82a4f2-b7b0-ef11-b8e8-6045bdcf868c");
+        // Console.WriteLine(deleteMessage);
        
     }
 }

@@ -33,12 +33,11 @@ namespace CognizantDataverse.Utilities
                                     RequireNewInstance=true";
         }
         
-        public void ConnectAndGetUserId()
+        public IOrganizationService Connect()
         {
             //ServiceClient implements IOrganizationService interface
             IOrganizationService service = new ServiceClient(_connectionString);
-            var response = (WhoAmIResponse)service.Execute(new WhoAmIRequest());
-            Console.WriteLine($"User Authenticated");
+            return service;
         }
 
     }

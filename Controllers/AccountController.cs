@@ -32,7 +32,7 @@ namespace CognizantDataverse.Controllers
             }
             catch (Exception ex)
             {
-                return $"Internal server error: {ex.Message}";
+                return $"Error creating account: {ex.Message}";
             }
         }
         
@@ -46,7 +46,7 @@ namespace CognizantDataverse.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception($"Internal server error: {ex.Message}");
+                throw new Exception($"Error Fetching Account: {ex.Message}");
             }
         }
         
@@ -89,7 +89,7 @@ namespace CognizantDataverse.Controllers
             }
             catch (Exception ex)
             {
-                return $"Internal server error: {ex.Message}";
+                return $"Failed to delete user: {ex.Message}";
             }
         }
         

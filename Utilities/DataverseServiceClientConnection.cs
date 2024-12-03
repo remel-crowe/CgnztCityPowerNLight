@@ -6,12 +6,13 @@ using Microsoft.Xrm.Sdk;
 
 namespace CognizantDataverse.Utilities
 {
-    public class DataverseServiceClientConnection
+    public static class DataverseServiceClientConnection
     {
-        private readonly string _connectionString;
-
-        public DataverseServiceClientConnection(IConfiguration configuration)
+        static string _connectionString;
+        
+        public static IOrganizationService Connect(IConfiguration configuration)
         {
+            
             // Fetch environment variables
             var SecretId = configuration["Dataverse:SecretId"];
             var AppId = configuration["Dataverse:AppId"];
@@ -31,14 +32,9 @@ namespace CognizantDataverse.Utilities
                                     Secret={SecretId};
                                     ClientId={AppId};
                                     RequireNewInstance=true";
-        }
-        
-        public void ConnectAndGetUserId()
-        {
             //ServiceClient implements IOrganizationService interface
             IOrganizationService service = new ServiceClient(_connectionString);
-            var response = (WhoAmIResponse)service.Execute(new WhoAmIRequest());
-            Console.WriteLine($"User Authenticated");
+            return service;
         }
 
     }

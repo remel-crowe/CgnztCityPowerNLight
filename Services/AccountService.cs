@@ -1,62 +1,71 @@
-using CognizantDataverse.Models;
-using CognizantDataverse.Utilities;
-using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading.Tasks;
+using CognizantDataverse.Model;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 
 namespace CognizantDataverse.Services
 {
-    public class AccountService(IConfiguration configuration, HttpClient httpClient)
+    /// <summary>
+    /// Service class to perform CRUD operations on Account entities within the Dataverse environment.
+    /// </summary>
+    public class AccountService(IOrganizationService dataverseConnection)
     {
-        private readonly IConfiguration _configuration = configuration;
-        private readonly HttpClient _httpClient = httpClient;
+        private readonly IOrganizationService _dataverseConnection = dataverseConnection;
 
-        public async Task<string> CreateAccount(string fname, string email, string phone)
+        /// <summary>
+        /// Creates a new account in the Dataverse environment.
+        /// </summary>
+        /// <param name="account">The account entity to be created.</param>
+        /// <returns>The unique identifier (GUID) of the created account.</returns>
+        public Guid CreateAccount(Account account)
         {
-            var url = $"https://orgff19c007.crm11.dynamics.com/api/data/v9.2/accounts";
-            var payload = new
+            return _dataverseConnection.Create(account);
+        }
+
+        /// <summary>
+        /// Retrieves an account by its unique identifier.
+        /// </summary>
+        /// <param name="accountId">The unique identifier (GUID) of the account to retrieve.</param>
+        /// <returns>The account entity with the specified identifier.</returns>
+        public Account GetAccountById(Guid accountId)
+        {
+            return (Account)_dataverseConnection.Retrieve(Account.EntityLogicalName, accountId, new ColumnSet(true));
+        }
+
+        /// <summary>
+        /// Updates an existing account in the Dataverse environment.
+        /// </summary>
+        /// <param name="account">The account entity with updated information.</param>
+        public void UpdateAccount(Account account)
+        {
+            _dataverseConnection.Update(account);
+        }
+
+        /// <summary>
+        /// Deletes an account from the Dataverse environment.
+        /// </summary>
+        /// <param name="accountId">The unique identifier (GUID) of the account to delete.</param>
+        public void DeleteAccount(Guid accountId)
+        {
+            _dataverseConnection.Delete(Account.EntityLogicalName, accountId);
+        }
+
+        /// <summary>
+        /// Retrieves all accounts from the Dataverse environment.
+        /// </summary>
+        /// <returns>A list of all account entities.</returns>
+        public List<Account> GetAccounts()
+        {
+            var query = new QueryExpression(Account.EntityLogicalName)
             {
-                name = fname,
-                emailaddress1 = email,
-                telephone1 = phone
+                ColumnSet = new ColumnSet(true)
             };
-            var response = await HttpRequestUtility.MakeHttpRequest(_httpClient, HttpMethod.Post, url, payload);
-            return JsonSerializer.Deserialize<Account>(response).Id;
-        }
-        public async Task<Account> GetAccountById(string accountId)
-        {
-            var url = $"https://orgff19c007.crm11.dynamics.com/api/data/v9.2/accounts({accountId})";
-            var response = await HttpRequestUtility.MakeHttpRequest(_httpClient, HttpMethod.Get, url);
-            return JsonSerializer.Deserialize<Account>(response);
-        }
-        
-        public async Task<List<Account>> GetAllAccounts()
-        {
-            var url = $"https://orgff19c007.crm11.dynamics.com/api/data/v9.2/accounts";
-            var response = await HttpRequestUtility.MakeHttpRequest(_httpClient, HttpMethod.Get, url);
-            var jsonResponse = JsonSerializer.Deserialize<JsonElement>(response);
-            var accounts = JsonSerializer.Deserialize<List<Account>>(jsonResponse.GetProperty("value").GetRawText());
-            return accounts;
-        }
-        
-        public async Task<string> UpdateAccount(string accountId, string name, string email, string phone)
-        {
-            var url = $"https://orgff19c007.crm11.dynamics.com/api/data/v9.2/accounts({accountId})";
-            var payload = new
+            var accounts = _dataverseConnection.RetrieveMultiple(query).Entities;
+            List<Account> accountList = new();
+            foreach (var account in accounts)
             {
-                name = name,
-                emailaddress1 = email,
-                telephone1 = phone
-            };
-            return await HttpRequestUtility.MakeHttpRequest(_httpClient, HttpMethod.Patch, url, payload);
-        }
-        
-        public async Task<string> DeleteAccount(string accountId)
-        {
-            var url = $"https://orgff19c007.crm11.dynamics.com/api/data/v9.2/accounts({accountId})";
-            return await HttpRequestUtility.MakeHttpRequest(_httpClient, HttpMethod.Delete, url);
+                accountList.Add((Account)account);
+            }
+            return accountList;
         }
     }
 }

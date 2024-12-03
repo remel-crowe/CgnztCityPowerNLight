@@ -60,6 +60,7 @@ public class ContactService(IOrganizationService dataverseConnection)
             ColumnSet = new ColumnSet(true)
         };
 
-        return _dataverseConnection.RetrieveMultiple(query).Entities.Select(entity => entity.ToEntity<Contact>()).ToList();
+        return _dataverseConnection.RetrieveMultiple(query).Entities
+                .Select(entity => entity.ToEntity<Contact>()).ToList();
     }
 }

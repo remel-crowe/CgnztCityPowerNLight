@@ -10,6 +10,7 @@ namespace CognizantDataverse.Services
     public class AccountService(IOrganizationService dataverseConnection)
     {
         private readonly IOrganizationService _dataverseConnection = dataverseConnection;
+        
         /// <summary>
         /// Creates a new account in the Dataverse environment.
         /// </summary>

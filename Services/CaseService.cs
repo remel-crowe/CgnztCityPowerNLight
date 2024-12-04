@@ -29,7 +29,11 @@ namespace CognizantDataverse.Services
             }
         }
         
-        
+        /// <summary>
+        /// Retrieves a case by its unique identifier(ID).
+        /// </summary>
+        /// <param name="caseId">The unique identifier (GUID) of the case to retrieve.</param>
+        /// <returns>The contact entity with the specified identifier.</returns>
         public Incident GetCaseById(Guid caseId)
         {
             try
@@ -42,6 +46,7 @@ namespace CognizantDataverse.Services
                 throw;
             }
         }
+        
         
         public List<Incident> GetCases()
         {

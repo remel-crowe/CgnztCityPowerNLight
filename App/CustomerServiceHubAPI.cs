@@ -34,38 +34,53 @@ public class CustomerServiceHubApi(IOrganizationService dataverseConnection)
         {
             Title = "Demo Incident",
             Description = "This is a demo incident",
-            CustomerId = new EntityReference(Account.EntityLogicalName, Guid.NewGuid())
+            CustomerId = new EntityReference(Account.EntityLogicalName, demoAccount.Id),
+            PrimaryContactId = new EntityReference(Contact.EntityLogicalName, demoContact.Id),
         };
         
-        // GetAndPrintAccounts();
-        // CreateAccount(demoAccount);
-        // GetAndPrintAccounts();
-        // // DeleteAccount();
-        // GetAndPrintAccounts();
-        GetandPrintCases();
+        var updatedDemoAccount = new Account
+        {
+            Id = demoAccount.Id,
+            Name = "Demo Account Updated",
+            EMailAddress1 = "Demoaccount@mail.com",
+            Telephone1 = "0987654321",
+            Address1_Line1 = "Test Address Updated"
+        };
+
+        // Create the account and set the ID
+        var createdAccountId = CreateAccount(demoAccount);
+        demoAccount = GetAccountById(createdAccountId);
         
-        
+   
         
     }
-    
-    
-    
-    private void CreateAccount(Account account)
+
+    private Guid CreateAccount(Account account)
     {
         try
-        { 
-            var createdAccountID= _accountService.CreateAccount(account);
-            Console.WriteLine("Account created with ID: " + createdAccountID);
+        {
+            var createdAccountId = _accountService.CreateAccount(account);
+            Console.WriteLine("Account created with ID: " + createdAccountId);
+            return createdAccountId;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            return Guid.Empty;
+        }
+    }
+    
+    private void UpdateAccount(Account account)
+    {
+        try
+        {
+            _accountService.UpdateAccount(account);
+            Console.WriteLine("Account updated with ID: " + account.Id);
         } catch (Exception e)
         {
             Console.WriteLine(e.Message);
         }
         
-    }
-    
-    private void UpdateAccount(Account account)
-    {
-        _accountService.UpdateAccount(account);
     }
     
     private void DeleteAccount(Guid accountId)
@@ -101,20 +116,51 @@ public class CustomerServiceHubApi(IOrganizationService dataverseConnection)
         var cases = _caseService.GetCases();
         foreach (var @case in cases)
         {
-            Console.WriteLine($"Case Title: {@case.Title} | Case ID: {@case.Id} | Case Customer: {@case.CustomerId.Name}"); ;
+            Console.WriteLine($"Case Title: {@case.Title} | Case ID: {@case.Id} | Case Customer: {@case.CustomerId.Name}");
         }
     }
     
     
-    // Search for cases by a search term - maybe not needed in the final version. ALSO BROKEN
-    // private void GetCasesBySearchTerm(string searchTerm)
-    // {
-    //     var cases = _caseService.GetCasesBySearchTerm(searchTerm);
-    //     foreach (var @case in cases)
-    //     {
-    //         Console.WriteLine($"Case Title: {@case.Title} | Case ID: {@case.Id} | Case Customer: {@case.CustomerId.Name}"); ;
-    //     }
-    // }
+    private Guid CreateContact(Contact contact)
+    {
+        try
+        {
+            var createdContactId = _contactService.CreateContact(contact);
+            Console.WriteLine("Contact created with ID: " + createdContactId);
+            return createdContactId;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            return Guid.Empty;
+        }
+    }
+    
+    private void UpdateContact(Contact contact)
+    {
+        try
+        {
+            _contactService.UpdateContact(contact);
+            Console.WriteLine("Contact updated with ID: " + contact.Id);
+        } catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        
+    }
+    
+    private void DeleteContact(Guid contactId)
+    {
+        try
+        {
+            _contactService.DeleteContact(contactId);
+            Console.WriteLine("Contact deleted with ID: " + contactId);
+        } catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        
+    }
     
     
     

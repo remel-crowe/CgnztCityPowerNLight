@@ -33,6 +33,8 @@ public class CustomerServiceHubApi(IOrganizationService dataverseConnection)
         ParentCustomerId = new EntityReference(Account.EntityLogicalName, demoAccount.Id)
     };
     
+    demoContact.Id = CreateEntity(contactService, demoContact);
+    
     var demoIncident = new Incident
     {
         Title = "Demo Incident",
@@ -41,10 +43,6 @@ public class CustomerServiceHubApi(IOrganizationService dataverseConnection)
         PrimaryContactId = new EntityReference(Contact.EntityLogicalName, demoContact.Id)
     };
     
-    demoContact.Id = CreateEntity(contactService, demoContact);
-
-    demoIncident.CustomerId = new EntityReference(Account.EntityLogicalName, demoAccount.Id);
-    demoIncident.PrimaryContactId = new EntityReference(Contact.EntityLogicalName, demoContact.Id);
     demoIncident.Id = CreateEntity(caseService, demoIncident);
 
     // Retrieve and display created entities

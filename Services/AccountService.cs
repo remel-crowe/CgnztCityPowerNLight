@@ -1,62 +1,108 @@
-using CognizantDataverse.Models;
-using CognizantDataverse.Utilities;
-using Microsoft.Extensions.Configuration;
+using CognizantDataverse.Model;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
+using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace CognizantDataverse.Services
 {
-    public class AccountService(IConfiguration configuration, HttpClient httpClient)
+    /// <summary>
+    /// Service class to perform CRUD operations on Account entities within the Dataverse environment.
+    /// </summary>
+    public class AccountService(IOrganizationService dataverseConnection) : IService<Account>
     {
-        private readonly IConfiguration _configuration = configuration;
-        private readonly HttpClient _httpClient = httpClient;
+        private readonly IOrganizationService _dataverseConnection = dataverseConnection;
+        
+        /// <summary>
+        /// Creates a new account in the Dataverse environment.
+        /// </summary>
+        /// <param name="account">The account entity to be created.</param>
+        /// <returns>The unique identifier (GUID) of the created account.</returns>
+        public Guid Create(Account account)
+        {
+            try
+            {
+                return _dataverseConnection.Create(account);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error creating account: {ex.Message}");
+                throw;
+            }
+        }
 
-        public async Task<string> CreateAccount(string fname, string email, string phone)
+        /// <summary>
+        /// Retrieves an account by its unique identifier.
+        /// </summary>
+        /// <param name="accountId">The unique identifier (GUID) of the account to retrieve.</param>
+        /// <returns>The account entity with the specified identifier.</returns>
+        public Account GetById(Guid accountId)
         {
-            var url = $"https://orgff19c007.crm11.dynamics.com/api/data/v9.2/accounts";
-            var payload = new
+            try
             {
-                name = fname,
-                emailaddress1 = email,
-                telephone1 = phone
-            };
-            var response = await HttpRequestUtility.MakeHttpRequest(_httpClient, HttpMethod.Post, url, payload);
-            return JsonSerializer.Deserialize<Account>(response).Id;
-        }
-        public async Task<Account> GetAccountById(string accountId)
-        {
-            var url = $"https://orgff19c007.crm11.dynamics.com/api/data/v9.2/accounts({accountId})";
-            var response = await HttpRequestUtility.MakeHttpRequest(_httpClient, HttpMethod.Get, url);
-            return JsonSerializer.Deserialize<Account>(response);
-        }
-        
-        public async Task<List<Account>> GetAllAccounts()
-        {
-            var url = $"https://orgff19c007.crm11.dynamics.com/api/data/v9.2/accounts";
-            var response = await HttpRequestUtility.MakeHttpRequest(_httpClient, HttpMethod.Get, url);
-            var jsonResponse = JsonSerializer.Deserialize<JsonElement>(response);
-            var accounts = JsonSerializer.Deserialize<List<Account>>(jsonResponse.GetProperty("value").GetRawText());
-            return accounts;
-        }
-        
-        public async Task<string> UpdateAccount(string accountId, string name, string email, string phone)
-        {
-            var url = $"https://orgff19c007.crm11.dynamics.com/api/data/v9.2/accounts({accountId})";
-            var payload = new
+                return (Account)_dataverseConnection.Retrieve(Account.EntityLogicalName, accountId, new ColumnSet(true));
+            }
+            catch (Exception ex)
             {
-                name = name,
-                emailaddress1 = email,
-                telephone1 = phone
-            };
-            return await HttpRequestUtility.MakeHttpRequest(_httpClient, HttpMethod.Patch, url, payload);
+                Console.WriteLine($"Error retrieving account: {ex.Message}");
+                throw;
+            }
         }
-        
-        public async Task<string> DeleteAccount(string accountId)
+
+        /// <summary>
+        /// Updates an existing account in the Dataverse environment.
+        /// </summary>
+        /// <param name="account">The account entity with updated information.</param>
+        public void Update(Account account)
         {
-            var url = $"https://orgff19c007.crm11.dynamics.com/api/data/v9.2/accounts({accountId})";
-            return await HttpRequestUtility.MakeHttpRequest(_httpClient, HttpMethod.Delete, url);
+            try
+            {
+                _dataverseConnection.Update(account);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error updating account: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Deletes an account from the Dataverse environment.
+        /// </summary>
+        /// <param name="accountId">The unique identifier (GUID) of the account to delete.</param>
+        public void Delete(Guid accountId)
+        {
+            try
+            {
+                _dataverseConnection.Delete(Account.EntityLogicalName, accountId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting account: {ex.Message}");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves all accounts from the Dataverse environment.
+        /// </summary>
+        /// <returns>A list of all account entities.</returns>
+        public List<Account> GetAll()
+        {
+            try
+            {
+                var query = new QueryExpression(Account.EntityLogicalName)
+                {
+                    ColumnSet = new ColumnSet(true)
+                };
+                return _dataverseConnection.RetrieveMultiple(query).Entities
+                        .Select(account => (Account)account).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving accounts: {ex.Message}");
+                throw;
+            }
         }
     }
 }

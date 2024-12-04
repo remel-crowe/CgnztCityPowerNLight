@@ -1,28 +1,101 @@
-using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using CognizantDataverse.Services;
-using Microsoft.Extensions.Configuration;
+using CognizantDataverse.Model;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 
 namespace CognizantDataverse.Services
 {
-    public class CaseService(IConfiguration configuration, AuthService authService, HttpClient httpClient)
+    /// <summary>
+    /// Service class to perform CRUD operations on Incident entities within the Dataverse environment.
+    /// </summary>
+    public class CaseService(IOrganizationService dataverseConnection) : IService<Incident>
     {
-        private readonly IConfiguration _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-        private readonly AuthService _authService = authService ?? throw new ArgumentNullException(nameof(authService));
-        private readonly HttpClient _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+        private readonly IOrganizationService _dataverseConnection = dataverseConnection;
         
-        public async Task GetCases()
+        /// <summary>
+        /// Creates a new case in the Dataverse environment.
+        /// </summary>
+        /// <param name="case">The case to be created</param>
+        /// <returns>The unique identifier (GUID) of the created case.</returns>
+        public Guid Create(Incident @case)
         {
-            var token = await _authService.GetAccessToken();
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-            var response = await _httpClient.GetAsync("incidents");
-            response.EnsureSuccessStatusCode();
+            try
+            {
+                return _dataverseConnection.Create(@case);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error creating case: {ex.Message}");
+                throw;
+            }
         }
-        // Get all cases (incidents)
+        
+        /// <summary>
+        /// Retrieves a case by its unique identifier(ID).
+        /// </summary>
+        /// <param name="caseId">The unique identifier (GUID) of the case to retrieve.</param>
+        /// <returns>The contact entity with the specified identifier.</returns>
+        public Incident GetById(Guid caseId)
+        {
+            try
+            {
+                return (Incident)_dataverseConnection.Retrieve(Incident.EntityLogicalName, caseId, new ColumnSet(true));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving case: {ex.Message}");
+                throw;
+            }
+        }
+        public List<Incident> GetAll()
+        {
+            try
+            {
+                var query = new QueryExpression(Incident.EntityLogicalName)
+                {
+                    ColumnSet = new ColumnSet(true)
+                };
+                return _dataverseConnection.RetrieveMultiple(query).Entities
+                        .Select(entity => (Incident)entity).ToList();
+                
+            } catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving cases: {ex.Message}");
+                throw;
+            }
+         
+        }
+        public void Update(Incident @case)
+        {
+            try
+            {
+                _dataverseConnection.Update(@case);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating case: {ex.Message}");
+                throw;
+            }
+        }
+        public void Delete(Guid caseId)
+        {
+            try
+            {
+                _dataverseConnection.Delete(Incident.EntityLogicalName, caseId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting case: {ex.Message}");
+                throw;
+            }
+        }
+        
     }
-    
+
 }
+
+
+    
+    
+    
+    
     

@@ -46,6 +46,8 @@ namespace CognizantDataverse.Services
                 throw;
             }
         }
+        
+        
         public List<Incident> GetAll()
         {
             try

@@ -173,7 +173,6 @@ public class CustomerServiceHubApi(IOrganizationService dataverseConnection)
         }
 
         Console.WriteLine($"Entity: {typeof(T).Name}");
-        Console.WriteLine($"ID: {entity.Id}");
         
         if (entity is Account account)
         {
@@ -191,6 +190,8 @@ public class CustomerServiceHubApi(IOrganizationService dataverseConnection)
         {
             Console.WriteLine($"Title: {incident.Title}");
             Console.WriteLine($"Description: {incident.Description}");
+            Console.WriteLine($"Customer: {incident.CustomerId?.Name}");
+            Console.WriteLine($"Primary Contact: {incident.PrimaryContactId?.Name}");
         }
 
         Console.WriteLine("-------------------------------");

@@ -7,7 +7,7 @@ namespace CognizantDataverse.Services;
 /// <summary>
 /// Service class to perform CRUD operations on Contact entities within the Dataverse environment.
 /// </summary>
-public class ContactService(IOrganizationService dataverseConnection)
+public class ContactService(IOrganizationService dataverseConnection) : IService<Contact>
 {
     private readonly IOrganizationService _dataverseConnection = dataverseConnection;
 
@@ -16,7 +16,7 @@ public class ContactService(IOrganizationService dataverseConnection)
     /// </summary>
     /// <param name="contact">The contact entity to be created.</param>
     /// <returns>The unique identifier (GUID) of the created contact.</returns>
-    public Guid CreateContact(Contact contact)
+    public Guid Create(Contact contact)
     {
         return _dataverseConnection.Create(contact);
     }
@@ -26,7 +26,7 @@ public class ContactService(IOrganizationService dataverseConnection)
     /// </summary>
     /// <param name="contactId">The unique identifier (GUID) of the contact to retrieve.</param>
     /// <returns>The contact entity with the specified identifier.</returns>
-    public Contact GetContactById(Guid contactId)
+    public Contact GetById(Guid contactId)
     {
         return (Contact)_dataverseConnection.Retrieve(Contact.EntityLogicalName, contactId, new ColumnSet(true));
     }
@@ -35,7 +35,7 @@ public class ContactService(IOrganizationService dataverseConnection)
     /// Updates an existing contact in the Dataverse environment.
     /// </summary>
     /// <param name="contact">The contact entity with updated information.</param>
-    public void UpdateContact(Contact contact)
+    public void Update(Contact contact)
     {
         _dataverseConnection.Update(contact);
     }
@@ -44,7 +44,7 @@ public class ContactService(IOrganizationService dataverseConnection)
     /// Deletes a contact from the Dataverse environment.
     /// </summary>
     /// <param name="contactId">The unique identifier (GUID) of the contact to delete.</param>
-    public void DeleteContact(Guid contactId)
+    public void Delete(Guid contactId)
     {
         _dataverseConnection.Delete(Contact.EntityLogicalName, contactId);
     }
@@ -53,7 +53,7 @@ public class ContactService(IOrganizationService dataverseConnection)
     /// Retrieves all contacts from the Dataverse environment.
     /// </summary>
     /// <returns>A list of all contact entities.</returns>
-    public List<Contact> GetContacts()
+    public List<Contact> GetAll()
     {
         var query = new QueryExpression(Contact.EntityLogicalName)
         {

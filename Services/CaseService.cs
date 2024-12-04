@@ -7,7 +7,7 @@ namespace CognizantDataverse.Services
     /// <summary>
     /// Service class to perform CRUD operations on Incident entities within the Dataverse environment.
     /// </summary>
-    public class CaseService(IOrganizationService dataverseConnection)
+    public class CaseService(IOrganizationService dataverseConnection) : IService<Incident>
     {
         private readonly IOrganizationService _dataverseConnection = dataverseConnection;
         
@@ -16,7 +16,7 @@ namespace CognizantDataverse.Services
         /// </summary>
         /// <param name="case">The case to be created</param>
         /// <returns>The unique identifier (GUID) of the created case.</returns>
-        public Guid CreateCase(Incident @case)
+        public Guid Create(Incident @case)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace CognizantDataverse.Services
         /// </summary>
         /// <param name="caseId">The unique identifier (GUID) of the case to retrieve.</param>
         /// <returns>The contact entity with the specified identifier.</returns>
-        public Incident GetCaseById(Guid caseId)
+        public Incident GetById(Guid caseId)
         {
             try
             {
@@ -46,9 +46,7 @@ namespace CognizantDataverse.Services
                 throw;
             }
         }
-        
-        
-        public List<Incident> GetCases()
+        public List<Incident> GetAll()
         {
             try
             {
@@ -66,8 +64,7 @@ namespace CognizantDataverse.Services
             }
          
         }
-        
-        public void UpdateCase(Incident @case)
+        public void Update(Incident @case)
         {
             try
             {
@@ -79,8 +76,7 @@ namespace CognizantDataverse.Services
                 throw;
             }
         }
-        
-        public void DeleteCase(Guid caseId)
+        public void Delete(Guid caseId)
         {
             try
             {
@@ -92,36 +88,7 @@ namespace CognizantDataverse.Services
                 throw;
             }
         }
-
         
-        // public List<Incident> GetCasesBySearchTerm(string searchTerm)
-        // {
-        //     try
-        //     {
-        //         var query = new QueryExpression(Incident.EntityLogicalName)
-        //         {
-        //             ColumnSet = new ColumnSet(true),
-        //             Criteria = new FilterExpression
-        //             {
-        //                 FilterOperator = LogicalOperator.Or,
-        //                 Conditions =
-        //                 {
-        //                     new ConditionExpression("incidentid", ConditionOperator.Equal, searchTerm),
-        //                     new ConditionExpression("title", ConditionOperator.Like, $"%{searchTerm}%"),
-        //                     new ConditionExpression("description", ConditionOperator.Like, $"%{searchTerm}%")
-        //                 }
-        //             }
-        //         };
-        //
-        //         return _dataverseConnection.RetrieveMultiple(query).Entities
-        //             .Select(entity => (Incident)entity).ToList();
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Console.WriteLine($"Error retrieving case: {ex.Message}");
-        //         throw;
-        //     }
-        // }
     }
 
 }

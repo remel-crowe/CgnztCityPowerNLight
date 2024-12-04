@@ -1,13 +1,16 @@
 using CognizantDataverse.Model;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CognizantDataverse.Services
 {
     /// <summary>
     /// Service class to perform CRUD operations on Account entities within the Dataverse environment.
     /// </summary>
-    public class AccountService(IOrganizationService dataverseConnection)
+    public class AccountService(IOrganizationService dataverseConnection) : IService<Account>
     {
         private readonly IOrganizationService _dataverseConnection = dataverseConnection;
         
@@ -16,7 +19,7 @@ namespace CognizantDataverse.Services
         /// </summary>
         /// <param name="account">The account entity to be created.</param>
         /// <returns>The unique identifier (GUID) of the created account.</returns>
-        public Guid CreateAccount(Account account)
+        public Guid Create(Account account)
         {
             try
             {
@@ -24,7 +27,6 @@ namespace CognizantDataverse.Services
             }
             catch (Exception ex)
             {
-                
                 Console.WriteLine($"Error creating account: {ex.Message}");
                 throw;
             }
@@ -35,7 +37,7 @@ namespace CognizantDataverse.Services
         /// </summary>
         /// <param name="accountId">The unique identifier (GUID) of the account to retrieve.</param>
         /// <returns>The account entity with the specified identifier.</returns>
-        public Account GetAccountById(Guid accountId)
+        public Account GetById(Guid accountId)
         {
             try
             {
@@ -52,7 +54,7 @@ namespace CognizantDataverse.Services
         /// Updates an existing account in the Dataverse environment.
         /// </summary>
         /// <param name="account">The account entity with updated information.</param>
-        public void UpdateAccount(Account account)
+        public void Update(Account account)
         {
             try
             {
@@ -60,8 +62,7 @@ namespace CognizantDataverse.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error updating account: {ex.Message}");
-                throw;
+                throw new Exception($"Error updating account: {ex.Message}");
             }
         }
 
@@ -69,7 +70,7 @@ namespace CognizantDataverse.Services
         /// Deletes an account from the Dataverse environment.
         /// </summary>
         /// <param name="accountId">The unique identifier (GUID) of the account to delete.</param>
-        public void DeleteAccount(Guid accountId)
+        public void Delete(Guid accountId)
         {
             try
             {
@@ -86,7 +87,7 @@ namespace CognizantDataverse.Services
         /// Retrieves all accounts from the Dataverse environment.
         /// </summary>
         /// <returns>A list of all account entities.</returns>
-        public List<Account> GetAccounts()
+        public List<Account> GetAll()
         {
             try
             {
@@ -96,7 +97,6 @@ namespace CognizantDataverse.Services
                 };
                 return _dataverseConnection.RetrieveMultiple(query).Entities
                         .Select(account => (Account)account).ToList();
-                
             }
             catch (Exception ex)
             {

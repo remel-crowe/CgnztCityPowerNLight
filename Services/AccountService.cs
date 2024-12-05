@@ -1,9 +1,7 @@
 using CognizantDataverse.Model;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 
 namespace CognizantDataverse.Services
 {
@@ -27,8 +25,7 @@ namespace CognizantDataverse.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error creating account: {ex.Message}");
-                throw;
+                throw new Exception($"Error creating account: {ex.Message}");
             }
         }
 
@@ -45,8 +42,7 @@ namespace CognizantDataverse.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error retrieving account: {ex.Message}");
-                throw;
+                throw new Exception($"Error retrieving account: {ex.Message}");
             }
         }
 
@@ -78,8 +74,7 @@ namespace CognizantDataverse.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error deleting account: {ex.Message}");
-                throw;
+                throw new Exception($"Error deleting account: {ex.Message}");
             }
         }
 
@@ -100,8 +95,7 @@ namespace CognizantDataverse.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error retrieving accounts: {ex.Message}");
-                throw;
+                throw new Exception($"Error retrieving accounts: {ex.Message}");
             }
         }
     }

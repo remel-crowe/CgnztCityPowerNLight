@@ -6,7 +6,7 @@ namespace CognizantDataverse.Utilities
 {
     public static class DataverseServiceClientConnection
     {
-        static string _connectionString;
+        private static string? _connectionString;
 
         /// <summary>
         /// Connects to the Dataverse environment using the provided configuration.
@@ -36,7 +36,6 @@ namespace CognizantDataverse.Utilities
                                     RequireNewInstance=true";
 
             // Create a new ServiceClient instance using the connection string
-            // ServiceClient implements IOrganizationService interface
             var service = new ServiceClient(_connectionString);
             return service;
         }

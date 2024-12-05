@@ -24,8 +24,7 @@ namespace CognizantDataverse.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error creating case: {ex.Message}");
-                throw;
+                throw new Exception($"Error creating case: {ex.Message}");
             }
         }
         
@@ -42,12 +41,14 @@ namespace CognizantDataverse.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error retrieving case: {ex.Message}");
-                throw;
+                throw new Exception($"Error retrieving case: {ex.Message}");
             }
         }
         
-        
+        /// <summary>
+        /// Lists all cases in the Dataverse environment.
+        /// </summary>
+        /// <returns>A list of incident entities</returns>
         public List<Incident> GetAll()
         {
             try
@@ -61,11 +62,15 @@ namespace CognizantDataverse.Services
                 
             } catch (Exception ex)
             {
-                Console.WriteLine($"Error retrieving cases: {ex.Message}");
-                throw;
+                throw new Exception($"Error retrieving cases: {ex.Message}");
             }
          
         }
+        
+        /// <summary>
+        /// Updates an existing case in the Dataverse environment.
+        /// </summary>
+        /// <param name="case">The incident to be udpated</param>
         public void Update(Incident @case)
         {
             try
@@ -74,8 +79,7 @@ namespace CognizantDataverse.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error updating case: {ex.Message}");
-                throw;
+                throw new Exception($"Error updating case: {ex.Message}");
             }
         }
         public void Delete(Guid caseId)
@@ -86,8 +90,7 @@ namespace CognizantDataverse.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error deleting case: {ex.Message}");
-                throw;
+                throw new Exception($"Error deleting case: {ex.Message}");
             }
         }
         

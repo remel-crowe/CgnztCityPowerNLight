@@ -86,7 +86,9 @@ public class CustomerServiceHubApi(IOrganizationService dataverseConnection)
     DeleteEntity(caseService, demoIncident.Id);
     DeleteEntity(contactService, demoContact.Id);
     DeleteEntity(accountService, demoAccount.Id);
-
+    
+    
+    
     Console.WriteLine("Demo completed!");
 }
 
@@ -161,35 +163,27 @@ public class CustomerServiceHubApi(IOrganizationService dataverseConnection)
         }
     }
     
-    
     private void DisplayEntity<T>(T entity) where T : Entity
     {
-        if (entity == null)
+        switch (entity)
         {
-            Console.WriteLine($"{typeof(T).Name} could not be found.");
-            return;
-        }
-
-        Console.WriteLine($"Entity: {typeof(T).Name}");
-        
-        if (entity is Account account)
-        {
-            Console.WriteLine($"Name: {account.Name}");
-            Console.WriteLine($"Email: {account.EMailAddress1}");
-            Console.WriteLine($"Phone: {account.Telephone1}");
-        }
-        else if (entity is Contact contact)
-        {
-            Console.WriteLine($"Name: {contact.FirstName} {contact.LastName}");
-            Console.WriteLine($"Email: {contact.EMailAddress1}");
-            Console.WriteLine($"Phone: {contact.Telephone1}");
-        }
-        else if (entity is Incident incident)
-        {
-            Console.WriteLine($"Title: {incident.Title}");
-            Console.WriteLine($"Description: {incident.Description}");
-            Console.WriteLine($"Customer: {incident.CustomerId?.Name}");
-            Console.WriteLine($"Primary Contact: {incident.PrimaryContactId?.Name}");
+            case null:
+                Console.WriteLine($"{typeof(T).Name} could not be found.");
+                return;
+            case Account account:
+                Console.WriteLine($"Name: {account.Name}");
+                Console.WriteLine($"Email: {account.EMailAddress1}");
+                break;
+            case Contact contact:
+                Console.WriteLine($"Name: {contact.FirstName} {contact.LastName}");
+                Console.WriteLine($"Email: {contact.EMailAddress1}");
+                break;
+            case Incident incident:
+                Console.WriteLine($"Title: {incident.Title}");
+                Console.WriteLine($"Description: {incident.Description}");
+                Console.WriteLine($"Customer: {incident.CustomerId?.Name}");
+                Console.WriteLine($"Primary Contact: {incident.PrimaryContactId?.Name}");
+                break;
         }
 
         Console.WriteLine("-------------------------------");

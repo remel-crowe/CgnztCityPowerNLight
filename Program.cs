@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿
 using CognizantDataverse.Utilities;
 using CognizantDataverse.App;
 
@@ -6,22 +6,20 @@ namespace CognizantDataverse
 {
     class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            // Build configuration to load from appsettings.json (Environment variables)
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .Build();
-
             // Initialise DataverseServiceClientConnection with the configuration
-            var dataverseConnection = DataverseServiceClientConnection.Connect(configuration);
+            var dataverseConnection = DataverseServiceClientConnection.Connect(ConfigBuilder.BuildConfiguration());
             
-            // Create a new instance of CustomerServiceHubAPI
-            var app = new CustomerServiceHubApi(dataverseConnection);
-            
+            var app = new CustomerServiceHubApp(dataverseConnection);
             // Run the app
-            app.Demo();
+            try
+            {
+                app.Demo();
+            } catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
           
         }
     }

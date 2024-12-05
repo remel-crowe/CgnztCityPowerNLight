@@ -1,11 +1,18 @@
 using CognizantDataverse.Model;
 using Microsoft.Xrm.Sdk;
 using CognizantDataverse.Services;
+using CognizantDataverse.Utilities;
 
-
+//NOT A CONTROLLER - CHANGE NAME
 namespace CognizantDataverse.App;
+/// <summary>
+/// Controller class for the Customer Service Hub application.
+/// Handles the creation, retrieval, updating, and deletion of entities.
+/// </summary>
+/// <param name="dataverseConnection">An authorised connection instance to a Dataverse environment.</param>
 
-public class CustomerServiceHubApi(IOrganizationService dataverseConnection)
+
+public class CustomerServiceHubApp(IOrganizationService dataverseConnection)
 {
     public void Demo()
 {
@@ -47,9 +54,9 @@ public class CustomerServiceHubApi(IOrganizationService dataverseConnection)
 
     // Retrieve and display created entities
     Console.WriteLine("\nRetrieving created entities...");
-    DisplayEntity(GetEntityById(accountService, demoAccount.Id));
-    DisplayEntity(GetEntityById(contactService, demoContact.Id));
-    DisplayEntity(GetEntityById(caseService, demoIncident.Id));
+    EntityUtils.DisplayEntity(GetEntityById(accountService, demoAccount.Id));
+    EntityUtils.DisplayEntity(GetEntityById(contactService, demoContact.Id));
+    EntityUtils.DisplayEntity(GetEntityById(caseService, demoIncident.Id));
 
     // Update entities
     Console.WriteLine("\nUpdating entities...");
@@ -77,9 +84,9 @@ public class CustomerServiceHubApi(IOrganizationService dataverseConnection)
 
     // Retrieve and display updated entities
     Console.WriteLine("\nRetrieving updated entities...");
-    DisplayEntity(GetEntityById(accountService, demoAccount.Id));
-    DisplayEntity(GetEntityById(contactService, demoContact.Id));
-    DisplayEntity(GetEntityById(caseService, demoIncident.Id));
+    EntityUtils.DisplayEntity(GetEntityById(accountService, demoAccount.Id));
+    EntityUtils.DisplayEntity(GetEntityById(contactService, demoContact.Id));
+    EntityUtils.DisplayEntity(GetEntityById(caseService, demoIncident.Id));
 
     // Delete entities
     Console.WriteLine("\nDeleting entities...");
@@ -100,10 +107,10 @@ public class CustomerServiceHubApi(IOrganizationService dataverseConnection)
             Console.WriteLine($"{typeof(T).Name} created with ID: " + createdEntityId);
             return createdEntityId;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e.Message);
-            return Guid.Empty;
+            Console.WriteLine(ex.Message);
+            throw;
         }
     }
     
@@ -115,10 +122,10 @@ public class CustomerServiceHubApi(IOrganizationService dataverseConnection)
             Console.WriteLine($"{typeof(T).Name} retrieved with ID: " + entity.Id);
             return entity;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e.Message);
-            return null;
+            Console.WriteLine(ex.Message);
+            throw;
         }
     }
     
@@ -130,10 +137,10 @@ public class CustomerServiceHubApi(IOrganizationService dataverseConnection)
             Console.WriteLine($"Retrieved all {typeof(T).Name} entities.");
             return entities;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e.Message);
-            return null;
+            Console.WriteLine(ex.Message);
+            throw;
         }
     }
     
@@ -144,9 +151,10 @@ public class CustomerServiceHubApi(IOrganizationService dataverseConnection)
             service.Update(entity);
             Console.WriteLine($"{typeof(T).Name} updated with ID: " + entity.Id);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine(ex.Message);
+            throw;
         }
     }
     
@@ -157,36 +165,13 @@ public class CustomerServiceHubApi(IOrganizationService dataverseConnection)
             service.Delete(id);
             Console.WriteLine($"{typeof(T).Name} deleted with ID: " + id);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine(ex.Message);
+            throw;
         }
     }
     
-    private void DisplayEntity<T>(T entity) where T : Entity
-    {
-        switch (entity)
-        {
-            case null:
-                Console.WriteLine($"{typeof(T).Name} could not be found.");
-                return;
-            case Account account:
-                Console.WriteLine($"Name: {account.Name}");
-                Console.WriteLine($"Email: {account.EMailAddress1}");
-                break;
-            case Contact contact:
-                Console.WriteLine($"Name: {contact.FirstName} {contact.LastName}");
-                Console.WriteLine($"Email: {contact.EMailAddress1}");
-                break;
-            case Incident incident:
-                Console.WriteLine($"Title: {incident.Title}");
-                Console.WriteLine($"Description: {incident.Description}");
-                Console.WriteLine($"Customer: {incident.CustomerId?.Name}");
-                Console.WriteLine($"Primary Contact: {incident.PrimaryContactId?.Name}");
-                break;
-        }
-
-        Console.WriteLine("-------------------------------");
-    }
+    
    
 }

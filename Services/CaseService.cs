@@ -24,7 +24,7 @@ namespace CognizantDataverse.Services
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error creating case: {ex.Message}");
+                throw new Exception($"Error creating case: {ex.Message}", ex);
             }
         }
         
@@ -37,11 +37,44 @@ namespace CognizantDataverse.Services
         {
             try
             {
-                return (Incident)_dataverseConnection.Retrieve(Incident.EntityLogicalName, caseId, new ColumnSet(true));
+                return (Incident)_dataverseConnection
+                    .Retrieve(Incident.EntityLogicalName, caseId, new ColumnSet(true));
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error retrieving case: {ex.Message}");
+                throw new Exception($"Error retrieving case: {ex.Message}", ex);
+            }
+        }
+        
+        /// <summary>
+        /// Updates an existing case in the Dataverse environment.
+        /// </summary>
+        /// <param name="case">The incident to be updated</param>
+        public void Update(Incident @case)
+        {
+            try
+            {
+                _dataverseConnection.Update(@case);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error updating case: {ex.Message}", ex);
+            }
+        }
+        
+        /// <summary>
+        /// Deletes an existing case in the Dataverse environment.
+        /// </summary>
+        /// <param name="caseId">The unique identifier (GUID) of the incident to be deleted.</param>
+        public void Delete(Guid caseId)
+        {
+            try
+            {
+                _dataverseConnection.Delete(Incident.EntityLogicalName, caseId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error deleting case: {ex.Message}", ex);
             }
         }
         
@@ -62,38 +95,10 @@ namespace CognizantDataverse.Services
                 
             } catch (Exception ex)
             {
-                throw new Exception($"Error retrieving cases: {ex.Message}");
+                throw new Exception($"Error retrieving cases: {ex.Message}", ex);
             }
          
         }
-        
-        /// <summary>
-        /// Updates an existing case in the Dataverse environment.
-        /// </summary>
-        /// <param name="case">The incident to be udpated</param>
-        public void Update(Incident @case)
-        {
-            try
-            {
-                _dataverseConnection.Update(@case);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error updating case: {ex.Message}");
-            }
-        }
-        public void Delete(Guid caseId)
-        {
-            try
-            {
-                _dataverseConnection.Delete(Incident.EntityLogicalName, caseId);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error deleting case: {ex.Message}");
-            }
-        }
-        
     }
 
 }

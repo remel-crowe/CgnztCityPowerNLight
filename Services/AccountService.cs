@@ -25,7 +25,7 @@ namespace CognizantDataverse.Services
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error creating account: {ex.Message}");
+                throw new Exception($"Error creating account: {ex.Message}", ex);
             }
         }
 
@@ -42,7 +42,7 @@ namespace CognizantDataverse.Services
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error retrieving account: {ex.Message}");
+                throw new Exception($"Error retrieving account: {ex.Message}", ex);
             }
         }
 
@@ -58,7 +58,7 @@ namespace CognizantDataverse.Services
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error updating account: {ex.Message}");
+                throw new Exception($"Error updating account: {ex.Message}", ex);
             }
         }
 
@@ -74,7 +74,7 @@ namespace CognizantDataverse.Services
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error deleting account: {ex.Message}");
+                throw new Exception($"Error deleting account: {ex.Message}", ex);
             }
         }
 
@@ -95,7 +95,7 @@ namespace CognizantDataverse.Services
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error retrieving accounts: {ex.Message}");
+                throw new Exception($"Error retrieving accounts: {ex.Message}", ex);
             }
         }
     }

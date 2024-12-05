@@ -18,7 +18,14 @@ public class ContactService(IOrganizationService dataverseConnection) : IService
     /// <returns>The unique identifier (GUID) of the created contact.</returns>
     public Guid Create(Contact contact)
     {
-        return _dataverseConnection.Create(contact);
+        try
+        {
+            return _dataverseConnection.Create(contact);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error creating contact: {ex.Message}", ex);
+        }
     }
 
     /// <summary>
@@ -28,7 +35,15 @@ public class ContactService(IOrganizationService dataverseConnection) : IService
     /// <returns>The contact entity with the specified identifier.</returns>
     public Contact GetById(Guid contactId)
     {
-        return (Contact)_dataverseConnection.Retrieve(Contact.EntityLogicalName, contactId, new ColumnSet(true));
+        try
+        {
+            return (Contact)_dataverseConnection.Retrieve(Contact.EntityLogicalName, contactId, new ColumnSet(true));
+        } 
+        catch (Exception ex)
+        {
+            throw new Exception($"Error retrieving contact: {ex.Message}", ex);
+        }
+        
     }
 
     /// <summary>
@@ -37,7 +52,15 @@ public class ContactService(IOrganizationService dataverseConnection) : IService
     /// <param name="contact">The contact entity with updated information.</param>
     public void Update(Contact contact)
     {
-        _dataverseConnection.Update(contact);
+        try
+        {
+            _dataverseConnection.Update(contact);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error updating contact: {ex.Message}", ex);
+        }
+        
     }
 
     /// <summary>
@@ -46,7 +69,15 @@ public class ContactService(IOrganizationService dataverseConnection) : IService
     /// <param name="contactId">The unique identifier (GUID) of the contact to delete.</param>
     public void Delete(Guid contactId)
     {
-        _dataverseConnection.Delete(Contact.EntityLogicalName, contactId);
+        try
+        {
+            _dataverseConnection.Delete(Contact.EntityLogicalName, contactId);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error deleting contact: {ex.Message}", ex);
+        }
+        
     }
 
     /// <summary>
@@ -60,7 +91,8 @@ public class ContactService(IOrganizationService dataverseConnection) : IService
             ColumnSet = new ColumnSet(true)
         };
 
-        return _dataverseConnection.RetrieveMultiple(query).Entities
+        return _dataverseConnection
+                .RetrieveMultiple(query).Entities
                 .Select(entity => entity.ToEntity<Contact>()).ToList();
     }
 }

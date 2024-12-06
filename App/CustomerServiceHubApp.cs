@@ -27,10 +27,10 @@ public class CustomerServiceHubApp(IOrganizationService dataverseConnection)
     Console.WriteLine("Creating an account and contact...");
     var demoAccount = new Account
     {
-        Name = "Big X",
+        Name = "Big X Corp",
         Telephone1 = "1234567890",
         Address1_City = "Houston",
-        EMailAddress1 = "mrbigx@mail.com",
+        EMailAddress1 = "mail@bigXcorp.com",
     };
     
     demoAccount.Id = CreateEntity(accountService, demoAccount);
@@ -40,7 +40,6 @@ public class CustomerServiceHubApp(IOrganizationService dataverseConnection)
         FirstName = "Little",
         LastName = "X",
         EMailAddress1 = "littleX@mail.com",
-        Company = "X Corp",
         Telephone1 = "0987654321",    
         ParentCustomerId = new EntityReference(Account.EntityLogicalName, demoAccount.Id),
     };

@@ -30,7 +30,7 @@ public static class EntityUtils
     {
         Console.WriteLine($"Full Name: {contact.FullName}");
         Console.WriteLine($"Email: {contact.EMailAddress1}");
-        Console.WriteLine($"Company: {contact.Company}");
+        Console.WriteLine($"Company: {contact.ParentContactId.Name}");
         Console.WriteLine($"Phone: {contact.Telephone1}");
         Console.WriteLine("-------------------------------");
     }

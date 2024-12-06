@@ -10,7 +10,6 @@ namespace CognizantDataverse
         {
             // Initialise DataverseServiceClientConnection with the configuration
             var dataverseConnection = DataverseServiceClientConnection.Connect(ConfigBuilder.BuildConfiguration());
-            
             var app = new CustomerServiceHubApp(dataverseConnection);
             
             // Run the app

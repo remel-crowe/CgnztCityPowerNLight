@@ -54,9 +54,10 @@ dotnet run
 ## Project Structure
 
 - `App/CustomerServiceHubApp.cs`: Main application class demonstrating entity operations.
-- `Model/Entities/Contact.cs`: Entity class for `Contact`.
+- `Model/Entities`: Entity classes for `Account`,`Contact` and `Incident` .
+- `Services/`: Service classes for `Account`, `Contact` and `Incident` entity operations.
 - `Utilities/DataverseServiceClientConnection.cs`: Utility class for connecting to Dataverse.
-- `Utilities/EntityUtils.cs`: Utility class for displaying entity details.
+- `Utilities/`: Utility classes for displaying entity details, creating dataverse connection, etc.
 
 ## Key Classes and Methods
 

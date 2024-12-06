@@ -14,6 +14,9 @@ namespace CognizantDataverse.App;
 
 public class CustomerServiceHubApp(IOrganizationService dataverseConnection)
 {
+    /// <summary>
+    /// Demonstrates the creation, retrieval, updating, and deletion of entities.
+    /// </summary>
     public void Demo()
 {
     var accountService = new AccountService(dataverseConnection);
@@ -21,35 +24,47 @@ public class CustomerServiceHubApp(IOrganizationService dataverseConnection)
     var caseService = new CaseService(dataverseConnection);
 
     // Create entities
-    Console.WriteLine("Creating entities...");
+    Console.WriteLine("Creating an account and contact...");
     var demoAccount = new Account
     {
-        Name = "Demo Account",
-        EMailAddress1 = "Demoaccount@mail.com",
+        Name = "Big X",
         Telephone1 = "1234567890",
+        Address1_City = "Houston",
+        EMailAddress1 = "mrbigx@mail.com",
     };
     
     demoAccount.Id = CreateEntity(accountService, demoAccount);
     
     var demoContact = new Contact
     {
-        FirstName = "Demo",
-        LastName = "Contact",
-        EMailAddress1 = "democontact@mail.com",
-        Telephone1 = "0987654321",
-        ParentCustomerId = new EntityReference(Account.EntityLogicalName, demoAccount.Id)
+        FirstName = "Little",
+        LastName = "X",
+        EMailAddress1 = "littleX@mail.com",
+        Company = "X Corp",
+        Telephone1 = "0987654321",    
+        ParentCustomerId = new EntityReference(Account.EntityLogicalName, demoAccount.Id),
     };
     
     demoContact.Id = CreateEntity(contactService, demoContact);
     
+   Console.WriteLine("\nAdding a contact to the account...");
+   var updatedAccount = new Account
+   {
+       Id = demoAccount.Id,
+       PrimaryContactId = new EntityReference(Contact.EntityLogicalName, demoContact.Id)
+   };
+   
+   UpdateEntity(accountService, updatedAccount);
+   
+    Console.WriteLine("\nCreating an incident...");
     var demoIncident = new Incident
     {
         Title = "Demo Incident",
         Description = "This is a demo incident",
+        CaseOriginCode = (incident_caseorigincode.Phone),
         CustomerId = new EntityReference(Account.EntityLogicalName, demoAccount.Id),
         PrimaryContactId = new EntityReference(Contact.EntityLogicalName, demoContact.Id)
     };
-    
     demoIncident.Id = CreateEntity(caseService, demoIncident);
 
     // Retrieve and display created entities
@@ -59,42 +74,39 @@ public class CustomerServiceHubApp(IOrganizationService dataverseConnection)
     EntityUtils.DisplayEntity(GetEntityById(caseService, demoIncident.Id));
 
     // Update entities
-    Console.WriteLine("\nUpdating entities...");
-    var updatedAccount = new Account
-    {
-        Id = demoAccount.Id,
-        Name = "Updated Demo Account",
-        Telephone1 = "1112223333"
-    };
+    Console.WriteLine("\nUpdating Contact and Incident...");
+    
     var updatedContact = new Contact
     {
         Id = demoContact.Id,
-        FirstName = "Updated Demo Contact",
+        FirstName = "Updated",
     };
     var updatedIncident = new Incident
     {
         Id = demoIncident.Id,
         Title = "Updated Incident",
+        
         Description = "Updated description for the demo incident"
     };
-
-    UpdateEntity(accountService, updatedAccount);
+    
     UpdateEntity(contactService, updatedContact);
     UpdateEntity(caseService, updatedIncident);
 
     // Retrieve and display updated entities
     Console.WriteLine("\nRetrieving updated entities...");
-    EntityUtils.DisplayEntity(GetEntityById(accountService, demoAccount.Id));
     EntityUtils.DisplayEntity(GetEntityById(contactService, demoContact.Id));
     EntityUtils.DisplayEntity(GetEntityById(caseService, demoIncident.Id));
 
     // Delete entities
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine("\nIMPORTANT: The following actions will delete the entities created in this demo. If you'd like to verify them in the tables, please do so now.");
+    Console.ResetColor();
+    Console.WriteLine("Press any key to continue...");
+    Console.ReadKey();
     Console.WriteLine("\nDeleting entities...");
     DeleteEntity(caseService, demoIncident.Id);
     DeleteEntity(contactService, demoContact.Id);
     DeleteEntity(accountService, demoAccount.Id);
-    
-    
     
     Console.WriteLine("Demo completed!");
 }
@@ -109,8 +121,7 @@ public class CustomerServiceHubApp(IOrganizationService dataverseConnection)
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
-            throw;
+            throw new Exception(ex.Message, ex);
         }
     }
     
@@ -124,8 +135,7 @@ public class CustomerServiceHubApp(IOrganizationService dataverseConnection)
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
-            throw;
+            throw new Exception(ex.Message, ex);
         }
     }
     
@@ -139,8 +149,7 @@ public class CustomerServiceHubApp(IOrganizationService dataverseConnection)
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
-            throw;
+            throw new Exception(ex.Message, ex);
         }
     }
     
@@ -153,8 +162,7 @@ public class CustomerServiceHubApp(IOrganizationService dataverseConnection)
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
-            throw;
+            throw new Exception(ex.Message, ex);
         }
     }
     
@@ -167,8 +175,7 @@ public class CustomerServiceHubApp(IOrganizationService dataverseConnection)
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
-            throw;
+            throw new Exception(ex.Message, ex);
         }
     }
     

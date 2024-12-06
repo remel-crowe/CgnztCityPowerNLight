@@ -1,5 +1,5 @@
 using CognizantDataverse.Model;
-using Microsoft.Xrm.Sdk;
+
 
 namespace CognizantDataverse.Utilities;
 
@@ -16,8 +16,9 @@ public static class EntityUtils
     public static void DisplayEntity(Account account)
     {
         Console.WriteLine($"Name: {account.Name}");
-        Console.WriteLine($"Email: {account.EMailAddress1}");
         Console.WriteLine($"Phone: {account.Telephone1}");
+        Console.WriteLine($"City: {account.Address1_City}");
+        Console.WriteLine($"Primary Contact: {account.PrimaryContactId.Name}");
         Console.WriteLine("-------------------------------");
     }
     
@@ -27,10 +28,10 @@ public static class EntityUtils
     /// <param name="contact">Entity of type Contact</param>
     public static void DisplayEntity(Contact contact)
     {
-        Console.WriteLine($"Name: {contact.FirstName} {contact.LastName}");
+        Console.WriteLine($"Full Name: {contact.FullName}");
         Console.WriteLine($"Email: {contact.EMailAddress1}");
+        Console.WriteLine($"Company: {contact.Company}");
         Console.WriteLine($"Phone: {contact.Telephone1}");
-        Console.WriteLine($"Parent Account: {contact.ParentCustomerId?.Name}");
         Console.WriteLine("-------------------------------");
     }
     /// <summary>
@@ -40,9 +41,11 @@ public static class EntityUtils
     public static void DisplayEntity(Incident incident)
     {
         Console.WriteLine($"Title: {incident.Title}");
-        Console.WriteLine($"Description: {incident.Description}");
-        Console.WriteLine($"Customer: {incident.CustomerId?.Name}");
-        Console.WriteLine($"Primary Contact: {incident.PrimaryContactId?.Name}");
+        Console.WriteLine($"Case Number: {incident.TicketNumber}");
+        Console.WriteLine($"Priority: {incident.PriorityCode}");
+        Console.WriteLine($"Origin: {incident.CaseOriginCode}");
+        Console.WriteLine($"Customer: {incident.CustomerId.Name}");
+        Console.WriteLine($"Status : {incident.StateCode}");
         Console.WriteLine($"Created On: {incident.CreatedOn}");
         Console.WriteLine("-------------------------------");
     }

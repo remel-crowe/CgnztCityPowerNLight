@@ -4,14 +4,15 @@ using CognizantDataverse.App;
 
 namespace CognizantDataverse
 {
-    class Program
+    internal class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             // Initialise DataverseServiceClientConnection with the configuration
             var dataverseConnection = DataverseServiceClientConnection.Connect(ConfigBuilder.BuildConfiguration());
             
             var app = new CustomerServiceHubApp(dataverseConnection);
+            
             // Run the app
             try
             {

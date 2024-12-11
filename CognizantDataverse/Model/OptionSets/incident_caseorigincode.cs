@@ -9,22 +9,34 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CognizantDataverse.Model
+namespace CognizantDataverse.Model.OptionSets
 {
 	
 	
 	/// <summary>
-	/// Post message type private or direct.
+	/// Information that specifies the source of the case information, such as Web, telephone, or email.
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum socialactivity_postmessagetype
+	public enum incident_caseorigincode
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		PublicMessage = 0,
+		Phone = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		PrivateMessage = 1,
+		Email = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Web = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Facebook = 2483,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Twitter = 3986,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		IoT = 700610000,
 	}
 }
 #pragma warning restore CS1591

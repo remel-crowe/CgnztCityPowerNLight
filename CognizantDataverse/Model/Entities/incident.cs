@@ -1,4 +1,4 @@
-using CognizantDataverse.Model;
+using CognizantDataverse.Model.OptionSets;
 
 #pragma warning disable CS1591
 //------------------------------------------------------------------------------
@@ -11,7 +11,7 @@ using CognizantDataverse.Model;
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CognizantDataverse.Model
+namespace CognizantDataverse.Model.Entities
 {
 	
 	/// <summary>
@@ -1358,7 +1358,7 @@ namespace CognizantDataverse.Model
 		/// Choose an additional customer contact who can also help resolve the case.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("responsiblecontactid")]
-		[System.ObsoleteAttribute()]
+		[Obsolete()]
 		public Microsoft.Xrm.Sdk.EntityReference ResponsibleContactId
 		{
 			get
@@ -1655,15 +1655,15 @@ namespace CognizantDataverse.Model
 		/// 1:N incident_existingcase
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("incident_existingcase", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
-		public System.Collections.Generic.IEnumerable<CognizantDataverse.Model.Incident> Referencedincident_existingcase
+		public System.Collections.Generic.IEnumerable<Incident> Referencedincident_existingcase
 		{
 			get
 			{
-				return this.GetRelatedEntities<CognizantDataverse.Model.Incident>("incident_existingcase", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+				return this.GetRelatedEntities<Incident>("incident_existingcase", Microsoft.Xrm.Sdk.EntityRole.Referenced);
 			}
 			set
 			{
-				this.SetRelatedEntities<CognizantDataverse.Model.Incident>("incident_existingcase", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.SetRelatedEntities<Incident>("incident_existingcase", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 			}
 		}
 		
@@ -1671,15 +1671,15 @@ namespace CognizantDataverse.Model
 		/// 1:N incident_master_incident
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("incident_master_incident", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
-		public System.Collections.Generic.IEnumerable<CognizantDataverse.Model.Incident> Referencedincident_master_incident
+		public System.Collections.Generic.IEnumerable<Incident> Referencedincident_master_incident
 		{
 			get
 			{
-				return this.GetRelatedEntities<CognizantDataverse.Model.Incident>("incident_master_incident", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+				return this.GetRelatedEntities<Incident>("incident_master_incident", Microsoft.Xrm.Sdk.EntityRole.Referenced);
 			}
 			set
 			{
-				this.SetRelatedEntities<CognizantDataverse.Model.Incident>("incident_master_incident", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.SetRelatedEntities<Incident>("incident_master_incident", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 			}
 		}
 		
@@ -1687,15 +1687,15 @@ namespace CognizantDataverse.Model
 		/// 1:N incident_parent_incident
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("incident_parent_incident", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
-		public System.Collections.Generic.IEnumerable<CognizantDataverse.Model.Incident> Referencedincident_parent_incident
+		public System.Collections.Generic.IEnumerable<Incident> Referencedincident_parent_incident
 		{
 			get
 			{
-				return this.GetRelatedEntities<CognizantDataverse.Model.Incident>("incident_parent_incident", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+				return this.GetRelatedEntities<Incident>("incident_parent_incident", Microsoft.Xrm.Sdk.EntityRole.Referenced);
 			}
 			set
 			{
-				this.SetRelatedEntities<CognizantDataverse.Model.Incident>("incident_parent_incident", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.SetRelatedEntities<Incident>("incident_parent_incident", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 			}
 		}
 		
@@ -1704,15 +1704,15 @@ namespace CognizantDataverse.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("primarycontactid")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_as_primary_contact")]
-		public CognizantDataverse.Model.Contact contact_as_primary_contact
+		public Contact contact_as_primary_contact
 		{
 			get
 			{
-				return this.GetRelatedEntity<CognizantDataverse.Model.Contact>("contact_as_primary_contact", null);
+				return this.GetRelatedEntity<Contact>("contact_as_primary_contact", null);
 			}
 			set
 			{
-				this.SetRelatedEntity<CognizantDataverse.Model.Contact>("contact_as_primary_contact", null, value);
+				this.SetRelatedEntity<Contact>("contact_as_primary_contact", null, value);
 			}
 		}
 		
@@ -1721,15 +1721,15 @@ namespace CognizantDataverse.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("responsiblecontactid")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_as_responsible_contact")]
-		public CognizantDataverse.Model.Contact contact_as_responsible_contact
+		public Contact contact_as_responsible_contact
 		{
 			get
 			{
-				return this.GetRelatedEntity<CognizantDataverse.Model.Contact>("contact_as_responsible_contact", null);
+				return this.GetRelatedEntity<Contact>("contact_as_responsible_contact", null);
 			}
 			set
 			{
-				this.SetRelatedEntity<CognizantDataverse.Model.Contact>("contact_as_responsible_contact", null, value);
+				this.SetRelatedEntity<Contact>("contact_as_responsible_contact", null, value);
 			}
 		}
 		
@@ -1738,15 +1738,15 @@ namespace CognizantDataverse.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("customerid")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("incident_customer_accounts")]
-		public CognizantDataverse.Model.Account incident_customer_accounts
+		public Account incident_customer_accounts
 		{
 			get
 			{
-				return this.GetRelatedEntity<CognizantDataverse.Model.Account>("incident_customer_accounts", null);
+				return this.GetRelatedEntity<Account>("incident_customer_accounts", null);
 			}
 			set
 			{
-				this.SetRelatedEntity<CognizantDataverse.Model.Account>("incident_customer_accounts", null, value);
+				this.SetRelatedEntity<Account>("incident_customer_accounts", null, value);
 			}
 		}
 		
@@ -1755,15 +1755,15 @@ namespace CognizantDataverse.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("customerid")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("incident_customer_contacts")]
-		public CognizantDataverse.Model.Contact incident_customer_contacts
+		public Contact incident_customer_contacts
 		{
 			get
 			{
-				return this.GetRelatedEntity<CognizantDataverse.Model.Contact>("incident_customer_contacts", null);
+				return this.GetRelatedEntity<Contact>("incident_customer_contacts", null);
 			}
 			set
 			{
-				this.SetRelatedEntity<CognizantDataverse.Model.Contact>("incident_customer_contacts", null, value);
+				this.SetRelatedEntity<Contact>("incident_customer_contacts", null, value);
 			}
 		}
 		
@@ -1772,15 +1772,15 @@ namespace CognizantDataverse.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("existingcase")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("incident_existingcase", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
-		public CognizantDataverse.Model.Incident Referencingincident_existingcase
+		public Incident Referencingincident_existingcase
 		{
 			get
 			{
-				return this.GetRelatedEntity<CognizantDataverse.Model.Incident>("incident_existingcase", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+				return this.GetRelatedEntity<Incident>("incident_existingcase", Microsoft.Xrm.Sdk.EntityRole.Referencing);
 			}
 			set
 			{
-				this.SetRelatedEntity<CognizantDataverse.Model.Incident>("incident_existingcase", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.SetRelatedEntity<Incident>("incident_existingcase", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 			}
 		}
 		
@@ -1789,15 +1789,15 @@ namespace CognizantDataverse.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("masterid")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("incident_master_incident", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
-		public CognizantDataverse.Model.Incident Referencingincident_master_incident
+		public Incident Referencingincident_master_incident
 		{
 			get
 			{
-				return this.GetRelatedEntity<CognizantDataverse.Model.Incident>("incident_master_incident", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+				return this.GetRelatedEntity<Incident>("incident_master_incident", Microsoft.Xrm.Sdk.EntityRole.Referencing);
 			}
 			set
 			{
-				this.SetRelatedEntity<CognizantDataverse.Model.Incident>("incident_master_incident", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.SetRelatedEntity<Incident>("incident_master_incident", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 			}
 		}
 		
@@ -1806,15 +1806,15 @@ namespace CognizantDataverse.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcaseid")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("incident_parent_incident", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
-		public CognizantDataverse.Model.Incident Referencingincident_parent_incident
+		public Incident Referencingincident_parent_incident
 		{
 			get
 			{
-				return this.GetRelatedEntity<CognizantDataverse.Model.Incident>("incident_parent_incident", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+				return this.GetRelatedEntity<Incident>("incident_parent_incident", Microsoft.Xrm.Sdk.EntityRole.Referencing);
 			}
 			set
 			{
-				this.SetRelatedEntity<CognizantDataverse.Model.Incident>("incident_parent_incident", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.SetRelatedEntity<Incident>("incident_parent_incident", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 			}
 		}
 	}

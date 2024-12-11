@@ -9,25 +9,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CognizantDataverse.Model
+namespace CognizantDataverse.Model.OptionSets
 {
 	
 	
 	/// <summary>
-	/// The service process stage that this entity is in.
+	/// Post message type private or direct.
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum servicestage
+	public enum socialactivity_postmessagetype
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Identify = 0,
+		PublicMessage = 0,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Research = 1,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Resolve = 2,
+		PrivateMessage = 1,
 	}
 }
 #pragma warning restore CS1591

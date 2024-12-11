@@ -1,4 +1,5 @@
 using CognizantDataverse.Model;
+using CognizantDataverse.Model.Entities;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 

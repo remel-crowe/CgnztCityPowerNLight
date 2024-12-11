@@ -1,4 +1,6 @@
 using CognizantDataverse.Model;
+using CognizantDataverse.Model.Entities;
+using CognizantDataverse.Model.OptionSets;
 using Microsoft.Xrm.Sdk;
 using CognizantDataverse.Services;
 using CognizantDataverse.Utilities;

@@ -1,4 +1,5 @@
 using CognizantDataverse.Model;
+using CognizantDataverse.Model.Entities;
 
 
 namespace CognizantDataverse.Utilities;

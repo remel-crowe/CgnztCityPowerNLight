@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CognizantDataverse.Model
+namespace CognizantDataverse.Model.Messages
 {
 	
 	

@@ -9,34 +9,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CognizantDataverse.Model
+namespace CognizantDataverse.Model.OptionSets
 {
 	
 	
 	/// <summary>
-	/// Information that specifies the source of the case information, such as Web, telephone, or email.
+	/// The service process stage that this entity is in.
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum incident_caseorigincode
+	public enum servicestage
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Phone = 1,
+		Identify = 0,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Email = 2,
+		Research = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Web = 3,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Facebook = 2483,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Twitter = 3986,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		IoT = 700610000,
+		Resolve = 2,
 	}
 }
 #pragma warning restore CS1591
